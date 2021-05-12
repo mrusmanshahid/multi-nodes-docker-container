@@ -1,0 +1,32 @@
+version: "3"
+services:
+    crud-frontend:
+      container_name: product-frontend
+      command: npm start
+      build: ./product-crud-frontend
+      volumes:
+        - ./product-crud-frontend/src:/product-app/product-frontend/src
+      ports:
+        - 8080:3000
+      environment:
+        NODE_ENV: development
+    crud-backend:
+      build: ./product-crud-backend
+      container_name: product-backend
+      command: npm run dev
+      volumes:
+        - ./product-crud-backend/src:/product-app/product-backend/src
+      ports:
+        - 8081:3000
+      environment:
+        NODE_ENV: development
+    db:
+      container_name: mongo_database
+      image: mongo
+      ports:
+        - 27017:27017
+    redis:
+      image: redis
+      container_name: redis-cache
+      ports:
+        - 6379:6379
